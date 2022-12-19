@@ -1,18 +1,10 @@
-const Notes = require("./database");
+const database = require("./database");
 const data = require("./notes.json");
 
-for (const note of data) {
-  const newNote = new Notes({});
-  newNote.title = note.title;
-  newNote.description = note.description;
+const seedDatabase = async () => {
+  database.insertMany(data);
+  console.log("Load Seed complete!");
+  console.log("Refresh the page please");
+};
 
-  newNote.save((err, n) => {
-    if (err) {
-      console.log(err);
-    }
-
-    console.log(`Saved: ${n.title}`);
-  });
-}
-
-console.log("finished")
+seedDatabase();
