@@ -1,0 +1,22 @@
+version: '3'
+services:
+  mongo:
+    image: 'mongo:latest'
+    restart: always
+    container_name: notes_db
+    env_file:
+      - .env
+    ports:
+      - "$MONGO_DB_PORT:$MONGO_DB_PORT"
+
+  notes-app:
+    container_name: notes_app
+    restart: always
+    build:
+      dockerfile: Dockerfile
+    ports:
+      - "$PORT:$PORT"
+    links:
+      - 'mongo'
+    depends_on:
+      - mongo
